@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 
+const noStore = { 'Cache-Control': 'no-store' };
 export async function GET() {
   const key=process.env.GOLD_API_KEY;
-  if(!key) return NextResponse.json({error:'Altın veri sağlayıcısı için GOLD_API_KEY henüz yapılandırılmadı.'},{status:503});
+  if(!key) return NextResponse.json({error:'Altın fiyatı servisi henüz yapılandırılmadı.'},{status:503,headers:noStore});
   try {
-    const response=await fetch('https://www.goldapi.io/api/XAU/TRY',{headers:{'x-access-token':key,'Content-Type':'application/json'},cache:'no-store'});
+    const response=await fetch('https://www.goldapi.io/api/XAU/TRY',{headers:{'x-access-token':key},cache:'no-store',signal:AbortSignal.timeout(8000)});
     if(!response.ok) throw new Error(`Altın sağlayıcısı ${response.status} yanıtı verdi.`);
     const body=await response.json() as {price?:number;timestamp?:number};
     if(typeof body.price!=='number'||!Number.isFinite(body.price)||typeof body.timestamp!=='number') throw new Error('Sağlayıcı geçerli fiyat döndürmedi.');
-    return NextResponse.json({ounceTry:body.price,gramTry:body.price/31.1034768,observedAt:new Date(body.timestamp*1000).toISOString(),fetchedAt:new Date().toISOString(),source:'GoldAPI.io'});
-  } catch(reason) {return NextResponse.json({error:reason instanceof Error?reason.message:'Altın verisi alınamadı.'},{status:503});}
+    return NextResponse.json({ounceTry:body.price,gramTry:body.price/31.1034768,observedAt:new Date(body.timestamp*1000).toISOString(),fetchedAt:new Date().toISOString(),source:'GoldAPI.io'},{headers:noStore});
+  } catch(reason) {console.error('[api/altin] Provider request failed',reason instanceof Error?reason.message:'Unknown error');return NextResponse.json({error:'Altın fiyatı sağlayıcısına şu anda ulaşılamıyor.'},{status:503,headers:noStore});}
 }
