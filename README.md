@@ -15,7 +15,7 @@ Türkiye’deki kullanıcılar için mobil öncelikli, ücretsiz günlük yaşam
 
 ## Gereksinimler
 
-- Node.js 20.9 veya üzeri (Node.js 22 LTS önerilir)
+- Node.js 22 LTS
 - npm
 
 ## Windows kurulumu
@@ -56,11 +56,12 @@ Testler saf hesaplama ve günlük oyun seçim/puanlama fonksiyonlarını kapsar.
 
 ### Vercel
 
-1. GitHub deposunu Vercel’e bağlayın.
-2. Framework olarak Next.js otomatik algılanır; build komutu `npm run build` olmalıdır.
-3. Production ortam değişkenlerini Vercel proje ayarlarına ekleyin.
-4. Alan adını bağladıktan sonra `NEXT_PUBLIC_SITE_URL` değerini `https://alanadiniz.com` biçiminde güncelleyin.
-5. Yeni deployment oluşturup `/sitemap.xml`, `/robots.txt` ve canlı veri sayfalarını kontrol edin.
+Depoda Node.js, install/build komutları ve temel güvenlik başlıklarını tanımlayan `vercel.json` bulunur. Ayrıntılı preview kurulumu, ortam değişkenleri ve yayın engelleri için [Vercel güvenli önizleme rehberine](docs/vercel-preview.md) bakın. Gerçek cihaz ve tarayıcı doğrulamasında [preview kontrol listesini](docs/preview-checklist.md) kullanın.
+
+1. GitHub deposunu Vercel’e bağlayın ve önce pull request Preview Deployment oluşturun.
+2. Production ortam değişkenlerini Vercel proje ayarlarına ekleyin.
+3. Alan adını bağladıktan sonra `NEXT_PUBLIC_SITE_URL` değerini `https://alanadiniz.com` biçiminde güncelleyin.
+4. `/sitemap.xml`, `/robots.txt`, güvenlik başlıkları ve canlı veri sayfalarını kontrol edin.
 
 ### Node.js sunucusu
 
