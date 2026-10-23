@@ -1,0 +1,5 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import WeatherLookup from '@/components/WeatherLookup';
+export const metadata:Metadata={title:'Şehir Bazlı Hava Durumu',description:'Şehir adına göre güncel sıcaklık, hissedilen sıcaklık, nem ve rüzgâr bilgisi.',alternates:{canonical:'/gunluk-yasam/hava-durumu'}};
+export default function Page(){return <main id="ana-icerik" className="container section"><div className="breadcrumb"><Link href="/">Ana sayfa</Link> / <Link href="/gunluk-yasam">Günlük yaşam</Link> / Hava durumu</div><div className="pageHeader"><span className="eyebrow">GÜNCEL HAVA</span><h1>Şehir hava durumu</h1><p className="intro">Şehir adına göre son ölçümü getir. Veri zamanı ve kaynak her sonuçta gösterilir.</p></div><WeatherLookup/><section className="contentCard explain"><h2>Veri hakkında</h2><p>Hava verileri Open‑Meteo üzerinden sağlanır. Ölçüm modelleri yerel istasyon koşullarından farklı olabilir; kritik kararlar için resmî meteoroloji uyarılarını takip et.</p></section></main>}

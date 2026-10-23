@@ -1,0 +1,6 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import AdSlot from '@/components/AdSlot';
+export const metadata:Metadata={title:'Günlük Ücretsiz Oyunlar',description:'Her gün yenilenen Türkçe kelime oyunu, sudoku ve bilgi yarışması.',alternates:{canonical:'/oyunlar'}};
+const games=[{href:'/oyunlar/kelime',icon:'A',title:'Günlük Kelime',text:'Altı denemede beş harfli Türkçe kelimeyi bul.'},{href:'/oyunlar/sudoku',icon:'9',title:'Sudoku',text:'Rakamları tekrar ettirmeden 9×9 tabloyu tamamla.'},{href:'/oyunlar/bilgi-yarismasi',icon:'?',title:'Bilgi Yarışması',text:'Her gün beş kısa soruyla genel kültürünü sına.'}];
+export default function Page(){return <main id="ana-icerik" className="container section"><div className="breadcrumb"><Link href="/">Ana sayfa</Link> / Oyunlar</div><div className="pageHeader"><span className="eyebrow">HER GÜN YENİ</span><h1>Günlük oyunlar</h1><p className="intro">Kısa bir mola ver. Oyunlar ücretsizdir ve oyun kontrollerinin yanında reklam gösterilmez.</p></div><div className="cards">{games.map(game=><Link className="toolcard" href={game.href} key={game.href}><span className="symbol">{game.icon}</span><h2>{game.title}</h2><p>{game.text}</p><span className="cardlink">Oyna →</span></Link>)}</div><AdSlot/></main>}

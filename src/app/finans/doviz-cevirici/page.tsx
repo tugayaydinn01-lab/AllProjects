@@ -1,0 +1,5 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import CurrencyConverter from '@/components/CurrencyConverter';
+export const metadata:Metadata={title:'Döviz Çevirici',description:'ECB referans kurlarına dayalı ücretsiz döviz çevirici. Kaynak ve veri tarihi açıkça gösterilir.',alternates:{canonical:'/finans/doviz-cevirici'}};
+export default function Page(){return <main id="ana-icerik" className="container section"><div className="breadcrumb"><Link href="/">Ana sayfa</Link> / <Link href="/finans">Finans</Link> / Döviz çevirici</div><div className="pageHeader"><span className="eyebrow">DÖVİZ</span><h1>Döviz çevirici</h1><p className="intro">Avrupa Merkez Bankası referans verilerini kullanan, güncelleme tarihi görünür kur hesaplayıcı.</p></div><CurrencyConverter/><section className="contentCard explain"><h2>Kur nasıl hesaplanır?</h2><p>Girilen tutar, sağlayıcının gösterdiği referans kurla çarpılır. Bu değer banka alış veya satış kuru değildir; komisyon, makas ve vergileri içermez.</p></section></main>}
