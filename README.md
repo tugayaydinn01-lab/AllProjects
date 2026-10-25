@@ -84,3 +84,5 @@ Ters proxy üzerinde HTTPS kullanın ve Node sürecini bir servis yöneticisiyle
 ## Reklam
 
 `AdSlot` bileşeni yalnızca görsel yerleşim alanıdır; gerçek reklam kodu veya uydurma yayıncı kimliği içermez. AdSense hesabı onaylandıktan, çerez/onay gereksinimleri tamamlandıktan ve yayıncı kimliği sağlandıktan sonra gerçek istemci kodu ayrıca entegre edilmelidir.
+
+SEO ve reklam hazırlığı için [denetim raporu](docs/seo-content-audit.md), [AdSense kontrol listesi](docs/adsense-readiness.md), [içerik planı](docs/content-plan.md) ve [yayın kontrol listesi](docs/seo-release-checklist.md) birlikte kullanılmalıdır. Gerçek publisher ID ve onay akışı olmadan reklam kodu veya ads.txt yayınlanmamalıdır.
