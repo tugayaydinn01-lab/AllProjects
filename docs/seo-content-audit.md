@@ -4,7 +4,7 @@ Denetim tarihi: 25 Ekim 2026
 
 ## Kapsam ve kanıt sınırları
 
-Kaynak kod, App Router rotaları, metadata, sitemap/robots üretimi, iç bağlantılar, erişilebilirlik işaretleri, API hata davranışları ve otomatik testler incelendi. Yerel Production build HTTP üzerinden tarandı: sitemap’teki 22 URL’nin tamamı 200 döndürdü, her sayfada tek H1/title/description/canonical bulundu, 22 title özgündü ve bulunan 23 iç bağlantıda kırık yanıt yoktu. On dört JSON-LD bloğu başarıyla ayrıştırıldı. Headless Chromium ile 390×844 mobil ve 1440×900 masaüstü profillerinde ana sayfa, kredi, Sudoku ve gizlilik sayfaları test edildi; yatay taşma ve Console hatası yoktu, skip link/arama/favori yenileme akışı çalıştı, Production reklam yer tutucusu görünmedi. Production adresine ve resmî Google destek sayfalarına bu çalışma ortamından yapılan HTTPS istekleri ise ağ geçidi tarafından `403 CONNECT tunnel failed` ile engellendi. Bu nedenle canlı HTTP kodları, Search Console dizin sayıları, gerçek cihaz Core Web Vitals ve Google politikalarının 25 Ekim 2026 metni doğrulanmış gibi raporlanmamıştır.
+Kaynak kod, App Router rotaları, metadata, sitemap/robots üretimi, iç bağlantılar, erişilebilirlik işaretleri, API hata davranışları ve otomatik testler incelendi. Yerel Production build HTTP üzerinden tarandı: branch sitemap’indeki 22 URL’nin tamamı 200 döndürdü, her sayfada tek H1/title/description/canonical bulundu, 22 title özgündü ve bulunan 23 iç bağlantıda kırık yanıt yoktu. On dört JSON-LD bloğu başarıyla ayrıştırıldı. Headless Chromium ile 390×844 mobil ve 1440×900 masaüstü profillerinde ana sayfa, kredi, Sudoku ve gizlilik sayfaları test edildi; yatay taşma ve Console hatası yoktu, skip link/arama/favori yenileme akışı çalıştı, Production reklam yer tutucusu görünmedi. Mevcut canlı sürüm 25 Ekim 2026 tarihinde ayrıca salt okunur tarandı: sitemap’teki 21 URL’nin tamamı HTTP 200 döndürdü ve her birinde tek H1, title, description ile canonical bulundu; robots.txt doğru sitemap adresini gösterip `/api/` yolunu engelledi. Branch henüz Production’a yayınlanmadığı için yeni `/hakkimizda` rotası bu canlı sitemap’te beklenildiği üzere yer almıyor. Resmî Google destek sayfaları ise bu çalışma ortamının ağ geçidinde `403 CONNECT tunnel failed` ile engellendi. Bu nedenle Search Console dizin sayıları, gerçek cihaz Core Web Vitals ve Google politikalarının 25 Ekim 2026 metni doğrulanmış gibi raporlanmamıştır.
 
 Search Console için kullanıcı tarafından sağlanan tek doğrulanmış bilgi: sitemap okunmuş ve 21 URL keşfedilmiştir; dizine ekleme raporu henüz hazır değildir. Bu rapor herhangi bir dizin sayısı tahmin etmez.
 
@@ -23,7 +23,7 @@ Bu branch P1 kod sorunlarını giderir. Reklam aktivasyonu için yayıncı kimli
 | AdSense hesabı ve gerçek publisher ID yok | Beklenen | Başvuru/onay sonrası yalnızca gerçek değer kullanılmalı; mevcut branch reklam kodu eklemez. |
 | ads.txt gerçek kaydı yok | Beklenen | AdSense’in hesapta verdiği kesin kayıt, alan adı ve publisher ID doğrulandıktan sonra yayınlanmalı. |
 | Reklam/analitik için bölgesel onay akışı yok | Reklam açılışı için engel | Hedef bölgeler belirlenmeli; gerekli yerlerde Google sertifikalı CMP ve TCF akışı reklam kodundan önce kurulmalı. |
-| Canlı site ve gerçek tarayıcı denetimi bu ajan tarafından yapılamadı | Açık yayın kapısı | Production’da HTTP, kaynak kodu, mobil/masaüstü, Lighthouse ve erişilebilirlik kontrolleri insan tarafından tamamlanmalı. |
+| Gerçek cihaz, Lighthouse/CWV ve yayın sonrası branch denetimi tamamlanmadı | Açık yayın kapısı | İnceleme sonrası Preview/Production’da gerçek mobil/masaüstü, Lighthouse, erişilebilirlik ve 22 URL taraması tamamlanmalı. |
 
 Bu maddeler mevcut reklamsız sitenin build edilmesini engellemez; AdSense kodunu Production’da etkinleştirmeyi veya başvuruya “hazır” demeyi engeller.
 
@@ -46,7 +46,7 @@ Bu maddeler mevcut reklamsız sitenin build edilmesini engellemez; AdSense kodun
 
 ## P2 — sonraki iyileştirmeler
 
-- Gerçek Production URL’sinde tüm sitemap rotalarını HTTP 200/404/yönlendirme açısından tara.
+- Branch onaylanıp yayınlandığında yeni 22 URL’lik sitemap’i Production alan adında yeniden tara; mevcut canlı 21 URL bu denetimde 200 döndürdü.
 - Headless Chromium testleri temiz olsa da gerçek Chrome Android, Safari iOS, Firefox ve Edge ile klavye/ekran okuyucu kontrollerini tamamla.
 - Production üzerinde Lighthouse ve CrUX/Search Console Core Web Vitals verisi topla; sayı uydurma.
 - Kelime oyunu için editoryal olarak gözden geçirilmiş daha geniş kabul sözlüğü ve erişilebilir sanal klavye değerlendir.
