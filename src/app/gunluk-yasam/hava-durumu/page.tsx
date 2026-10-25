@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import Breadcrumbs, { type BreadcrumbItem } from '@/components/Breadcrumbs';
+import { ToolStructuredData } from '@/components/StructuredData';
+import ToolGuide from '@/components/ToolGuide';
 import WeatherLookup from '@/components/WeatherLookup';
-export const metadata:Metadata={title:'Şehir Bazlı Hava Durumu',description:'Şehir adına göre güncel sıcaklık, hissedilen sıcaklık, nem ve rüzgâr bilgisi.',alternates:{canonical:'/gunluk-yasam/hava-durumu'}};
-export default function Page(){return <main id="ana-icerik" className="container section"><div className="breadcrumb"><Link href="/">Ana sayfa</Link> / <Link href="/gunluk-yasam">Günlük yaşam</Link> / Hava durumu</div><div className="pageHeader"><span className="eyebrow">GÜNCEL HAVA</span><h1>Şehir hava durumu</h1><p className="intro">Şehir adına göre son ölçümü getir. Veri zamanı ve kaynak her sonuçta gösterilir.</p></div><WeatherLookup/><section className="contentCard explain"><h2>Veri hakkında</h2><p>Hava verileri Open‑Meteo üzerinden sağlanır. Ölçüm modelleri yerel istasyon koşullarından farklı olabilir; kritik kararlar için resmî meteoroloji uyarılarını takip et.</p></section></main>}
+import { pageGuides } from '@/lib/guides.mjs';
+
+export const metadata:Metadata={title:'Şehir Bazlı Güncel Hava Durumu',description:'Şehir adına göre sıcaklık, hissedilen sıcaklık, nem ve rüzgâr; ölçüm zamanı ve Open‑Meteo kaynağıyla birlikte.',alternates:{canonical:'/gunluk-yasam/hava-durumu'},openGraph:{title:'Şehir Bazlı Güncel Hava Durumu',description:'Kaynağı ve ölçüm zamanı görünür şehir hava durumu.',url:'/gunluk-yasam/hava-durumu',type:'website'}};
+const breadcrumbs:BreadcrumbItem[]=[{label:'Ana sayfa',href:'/'},{label:'Günlük yaşam',href:'/gunluk-yasam'},{label:'Hava durumu'}];
+export default function Page(){return <main id="ana-icerik" className="container section"><ToolStructuredData name="Şehir Hava Durumu" description="Şehir adına göre kaynak ve ölçüm zamanı gösteren hava durumu aracı." path="/gunluk-yasam/hava-durumu" category="WeatherApplication" breadcrumbs={breadcrumbs}/><Breadcrumbs items={breadcrumbs}/><div className="pageHeader"><span className="eyebrow">GÜNCEL HAVA</span><h1>Şehir hava durumu</h1><p className="intro">Şehir adına göre son ölçümü getir. Veri zamanı ve kaynak her sonuçta gösterilir.</p></div><WeatherLookup/><ToolGuide guide={pageGuides.hava}/></main>}

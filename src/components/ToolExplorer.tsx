@@ -1,35 +1,31 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useSyncExternalStore } from 'react';
 import { portalTools } from '@/lib/tools';
 
 const storageKey = 'hergun-favoriler';
 
-function initialFavorites() {
-  if (typeof window === 'undefined') return [] as string[];
-  try {
-    const value = JSON.parse(window.localStorage.getItem(storageKey) || '[]');
-    return Array.isArray(value) ? value.filter((item): item is string => typeof item === 'string') : [];
-  } catch {
-    return [];
-  }
+function subscribeFavorites(callback:()=>void){window.addEventListener('storage',callback);window.addEventListener('hergun-favorites',callback);return()=>{window.removeEventListener('storage',callback);window.removeEventListener('hergun-favorites',callback)}}
+function getFavoritesSnapshot(){return window.localStorage.getItem(storageKey)||'[]'}
+function parseFavorites(value:string){try{const parsed=JSON.parse(value);return Array.isArray(parsed)?parsed.filter((item):item is string=>typeof item==='string'):[]}catch{return []}}
+
+function saveFavorites(favorites:string[]){
+  window.localStorage.setItem(storageKey,JSON.stringify(favorites));
+  window.dispatchEvent(new Event('hergun-favorites'));
 }
 
 export default function ToolExplorer() {
   const [query, setQuery] = useState('');
-  const [favorites, setFavorites] = useState<string[]>(initialFavorites);
+  const favoriteSnapshot=useSyncExternalStore(subscribeFavorites,getFavoritesSnapshot,()=> '[]');
+  const favorites=useMemo(()=>parseFavorites(favoriteSnapshot),[favoriteSnapshot]);
   const normalized = query.trim().toLocaleLowerCase('tr-TR');
   const filtered = useMemo(() => portalTools.filter((tool) =>
     !normalized || `${tool.title} ${tool.description} ${tool.category}`.toLocaleLowerCase('tr-TR').includes(normalized)
   ), [normalized]);
 
   function toggleFavorite(slug: string) {
-    setFavorites((current) => {
-      const next = current.includes(slug) ? current.filter((item) => item !== slug) : [...current, slug];
-      window.localStorage.setItem(storageKey, JSON.stringify(next));
-      return next;
-    });
+    saveFavorites(favorites.includes(slug) ? favorites.filter((item) => item !== slug) : [...favorites, slug]);
   }
 
   const favoriteTools = portalTools.filter((tool) => favorites.includes(tool.slug));
